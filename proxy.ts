@@ -29,6 +29,16 @@ function generateRequestId(): string {
   return uuidv4();
 }
 
+// Function to convert IPv6-mapped IPv4 addresses to IPv4 format
+function normalizeIp(ip: string | null | undefined): string | null {
+  if (!ip) return null;
+  // Handle IPv6-mapped IPv4 addresses (::ffff:x.x.x.x)
+  if (ip.startsWith('::ffff:')) {
+    return ip.substring(7);
+  }
+  return ip;
+}
+
 function setCors(res: ServerResponse) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, X-Requested-With");
@@ -195,7 +205,7 @@ const server = http.createServer(async (req, res) => {
       response_body: responseBody,
       response_status: upstreamRes.status,
       provider_url: UPSTREAM_URL,
-      client_ip: req.socket?.remoteAddress || null,
+      client_ip: normalizeIp(req.socket?.remoteAddress),
       user_agent: req.headers["user-agent"] || null,
       request_size: bodyBuf.length,
       response_size: Buffer.from(JSON.stringify(responseBody)).length,
