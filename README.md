@@ -7,11 +7,11 @@ A lightweight, production-ready OpenAI-compatible proxy server that seamlessly f
 | Environment Variable | Description | Default Value |
 |----------------------|-------------|-----------------|
 | `PORT` | Server port | `3007` |
-| `UPSTREAM_URL` | Your LLM endpoint URL | `""` |
-| `DATABASE_URL` | PostgreSQL connection string for logging | `""` |
+| `UPSTREAM_URL` | Your LLM endpoint URL | **Required** |
+| `DATABASE_URL` | PostgreSQL connection string for logging | **Required** |
 | `DATABASE_TABLE` | Name of the table to store the logs | `"llm_proxy"` |
 
-### Cost Calculation
+## 💰 Cost Calculation
 
 The cost is calculated based on the model and token usage with configurable pricing per model.
 
@@ -27,7 +27,9 @@ export const MODEL_COSTS: Record<string, CostConfig> = {
 
 You can add more models to the `MODEL_COSTS` object to support your specific LLM providers.
 
-## 📊 PostgreSQL Table Schema
+## 📊 Database Table Schema
+
+Before running the proxy, you need to create the table in the database.
 
 ```sql
 CREATE TABLE IF NOT EXISTS <DATABASE_TABLE> (

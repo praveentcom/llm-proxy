@@ -12,6 +12,12 @@ import { calculateCost } from "./cost";
 const PORT = Number(process.env.PORT || 3007);
 const UPSTREAM_URL = (process.env.UPSTREAM_URL || "").replace(/\/+$/, "");
 
+// Validate UPSTREAM_URL is configured
+if (!UPSTREAM_URL) {
+  console.error("❌ UPSTREAM_URL environment variable is required");
+  process.exit(1);
+}
+
 // --- PostgreSQL connection ---
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -80,16 +86,26 @@ const server = http.createServer(async (req, res) => {
     const bodyBuf = method === "POST" ? await readBody(req) : Buffer.from("");
     const requestJson = bodyBuf.length ? JSON.parse(bodyBuf.toString()) : null;
 
-    const upstreamRes = await fetch(UPSTREAM_URL + path + url.search, {
-      method,
-      headers: {
-        "Content-Type": (req.headers["content-type"] as string) || "application/json",
-        Authorization: auth.toString(),
-      },
-      // @ts-ignore
-      duplex: "half",
-      body: method === "POST" ? bodyBuf.toString() : undefined,
-    });
+    const targetUrl = UPSTREAM_URL + path + url.search;
+    
+    let upstreamRes;
+    try {
+      upstreamRes = await fetch(targetUrl, {
+        method,
+        headers: {
+          "Content-Type": (req.headers["content-type"] as string) || "application/json",
+          Authorization: auth.toString(),
+        },
+        // @ts-ignore
+        duplex: "half",
+        body: method === "POST" ? bodyBuf.toString() : undefined,
+      });
+    } catch (fetchError: any) {
+      console.error("Fetch error:", fetchError.message, "URL:", targetUrl);
+      res.statusCode = 502;
+      res.end(JSON.stringify({ error: "Failed to connect to upstream", message: fetchError.message }));
+      return;
+    }
 
     const contentType = upstreamRes.headers.get("content-type") || "application/json";
     res.statusCode = upstreamRes.status;
