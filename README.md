@@ -1,6 +1,8 @@
-# LLM Proxy Server
+# OpenProxy
 
 A lightweight, production-ready OpenAI-compatible proxy server that seamlessly forwards LLM API requests to any endpoint with comprehensive logging, cost tracking, and PostgreSQL integration. Perfect for monitoring API usage, calculating costs, and maintaining audit trails for your AI applications.
+
+<img width="2400" height="1260" alt="cover-image" src="https://github.com/user-attachments/assets/60f6e577-7d2e-45d0-accb-3af62894840f" />
 
 ## ⚙️ Configuration
 
