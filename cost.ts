@@ -28,7 +28,7 @@ export function calculateCost(model: string, usage?: Usage): number | null {
   if (!usage) return null;
 
   const { prompt_tokens = 0, completion_tokens = 0, prompt_tokens_details = { cached_tokens: 0 } } = usage;
-  const cost = MODEL_COSTS[model] || MODEL_COSTS["default"];
+  const cost = MODEL_COSTS[model.toLowerCase()] || MODEL_COSTS["default"];
 
   let inputCost = 0;
   let cachedCost = 0;

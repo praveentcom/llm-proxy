@@ -163,7 +163,7 @@ const server = http.createServer(async (req, res) => {
       timestamp: new Date(),
       request_method: method,
       request_path: path,
-      model: requestJson?.model || "default",
+      model: (requestJson?.model || "default").toLowerCase(),
       completion_tokens: usage.completion_tokens || null,
       prompt_tokens: usage.prompt_tokens || null,
       total_tokens: usage.total_tokens || null,
