@@ -27,9 +27,7 @@ export const MODEL_COSTS: Record<string, CostConfig> = {
 
 You can add more models to the `MODEL_COSTS` object to support your specific LLM providers.
 
-## 📊 Database Table Schema
-
-Before running the proxy, you need to create the table in the database.
+## 📊 PostgreSQL Table Schema
 
 ```sql
 CREATE TABLE IF NOT EXISTS <DATABASE_TABLE> (
@@ -46,10 +44,19 @@ CREATE TABLE IF NOT EXISTS <DATABASE_TABLE> (
   request_body JSONB,
   response_body JSONB,
   response_status INTEGER,
-  provider_url VARCHAR(500)
+  provider_url VARCHAR(500),
+  client_ip INET,
+  user_agent TEXT,
+  request_size INTEGER,
+  response_size INTEGER,
+  stream BOOLEAN,
+  temperature REAL,
+  max_tokens INTEGER,
+  request_id UUID
 );
 
 CREATE INDEX IF NOT EXISTS idx_<DATABASE_TABLE>_timestamp ON <DATABASE_TABLE> (timestamp);
+CREATE INDEX IF NOT EXISTS idx_<DATABASE_TABLE>_request_id ON <DATABASE_TABLE> (request_id);
 ```
 
 ## 🚀 Quick Start
@@ -123,24 +130,6 @@ The corresponding database entry will include:
 - Calculated cost based on your model pricing
 - Response time metrics
 - Complete request/response bodies for audit purposes
-
-## 🔧 Advanced Features
-
-### Custom Cost Models
-
-Extend the `cost.ts` file to support your specific pricing models:
-
-```typescript
-export const MODEL_COSTS: Record<string, CostConfig> = {
-  "gpt-4": { input: 0.03, cached: 0.015, output: 0.06 },
-  "claude-3": { input: 0.025, cached: 0.0125, output: 0.125 },
-  "custom-model": { input: 0.01, cached: 0.005, output: 0.02 },
-};
-```
-
-### Database Integration
-
-The proxy automatically logs all requests to your PostgreSQL database with comprehensive metadata for analysis and reporting.
 
 ## 🛡️ Security
 

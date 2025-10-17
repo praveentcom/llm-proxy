@@ -6,6 +6,7 @@ import "dotenv/config";
 import http, { IncomingMessage, ServerResponse } from "http";
 import { TextDecoder } from "util";
 import { Pool } from "pg";
+import { v4 as uuidv4 } from "uuid";
 
 import { calculateCost } from "./cost";
 
@@ -24,6 +25,10 @@ const pool = new Pool({
 });
 
 // --- Helper functions ---
+function generateRequestId(): string {
+  return uuidv4();
+}
+
 function setCors(res: ServerResponse) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, X-Requested-With");
@@ -189,7 +194,15 @@ const server = http.createServer(async (req, res) => {
       request_body: requestJson,
       response_body: responseBody,
       response_status: upstreamRes.status,
-      provider_url: UPSTREAM_URL
+      provider_url: UPSTREAM_URL,
+      client_ip: req.socket?.remoteAddress || null,
+      user_agent: req.headers["user-agent"] || null,
+      request_size: bodyBuf.length,
+      response_size: Buffer.from(JSON.stringify(responseBody)).length,
+      stream: contentType.includes("text/event-stream"),
+      temperature: requestJson?.temperature || null,
+      max_tokens: requestJson?.max_tokens || null,
+      request_id: generateRequestId(),
     };
 
     logToPG(logData).catch(err => console.error("PG log error:", err));
