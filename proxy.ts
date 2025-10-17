@@ -189,8 +189,7 @@ const server = http.createServer(async (req, res) => {
       request_body: requestJson,
       response_body: responseBody,
       response_status: upstreamRes.status,
-      provider_url: UPSTREAM_URL,
-      provider: "Upstream",
+      provider_url: UPSTREAM_URL
     };
 
     logToPG(logData).catch(err => console.error("PG log error:", err));
