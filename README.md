@@ -15,13 +15,13 @@ A lightweight, production-ready OpenAI-compatible proxy server that seamlessly f
 
 The cost is calculated based on the model and token usage with configurable pricing per model.
 
-You'll need to add the cost configuration for your models in the `cost.ts` file. The default cost configuration in the project (with sample values from `z.ai` models) is:
+You'll need to add the cost configuration (in cost per million tokens) for your models in the `cost.ts` file. The default cost configuration in the project (with sample values from `z.ai` models) is:
 
 ```typescript
 export const MODEL_COSTS: Record<string, CostConfig> = {
-  "glm-4.5-air": { input: 0.2, cached: 0.03, output: 1.1 }, // cost per million prompt tokens (USD)
-  "glm-4.6": { input: 0.6, cached: 0.11, output: 2.2 }, // cost per million cached tokens (USD)
-  "default": { input: 0, cached: 0, output: 0 }, // default cost configuration
+  "glm-4.5-air": { input: 0.2, cached: 0.03, output: 1.1 },
+  "glm-4.6": { input: 0.6, cached: 0.11, output: 2.2 },
+  "default": { input: 0, cached: 0, output: 0 },
 };
 ```
 
