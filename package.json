@@ -8,6 +8,27 @@
     "start": "node dist/proxy.js",
     "build": "tsc"
   },
+  "keywords": [
+    "llm",
+    "proxy",
+    "openai",
+    "api",
+    "logging",
+    "cost-tracking",
+    "postgresql",
+    "monitoring",
+    "audit"
+  ],
+  "author": "LLM Proxy Server Contributors",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/praveentcom/llm-proxy-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/praveentcom/llm-proxy-server/issues"
+  },
+  "homepage": "https://github.com/praveentcom/llm-proxy-server#readme",
   "devDependencies": {
     "@types/node": "^24.8.1",
     "@types/pg": "^8.15.5",
