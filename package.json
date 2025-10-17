@@ -1,5 +1,5 @@
 {
-  "name": "llm-proxy-server",
+  "name": "openproxy",
   "version": "1.0.0",
   "description": "A lightweight, production-ready OpenAI-compatible proxy server that seamlessly forwards LLM API requests to any endpoint with comprehensive logging, cost tracking, and PostgreSQL integration. Perfect for monitoring API usage, calculating costs, and maintaining audit trails for your AI applications.",
   "main": "proxy.ts",
@@ -23,12 +23,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/praveentcom/llm-proxy-server.git"
+    "url": "https://github.com/praveentcom/openproxy.git"
   },
   "bugs": {
-    "url": "https://github.com/praveentcom/llm-proxy-server/issues"
+    "url": "https://github.com/praveentcom/openproxy/issues"
   },
-  "homepage": "https://github.com/praveentcom/llm-proxy-server#readme",
+  "homepage": "https://github.com/praveentcom/openproxy#readme",
   "devDependencies": {
     "@types/node": "^24.8.1",
     "@types/pg": "^8.15.5",

@@ -18,8 +18,8 @@ Thank you for your interest in contributing to the LLM Proxy Server! This docume
 1. **Fork the repository** on GitHub
 2. **Clone your fork** locally:
    ```bash
-   git clone https://github.com/praveentcom/llm-proxy-server.git
-   cd llm-proxy-server
+   git clone https://github.com/praveentcom/openproxy.git
+   cd openproxy
    ```
 3. **Set up your development environment** (see below)
 4. **Create a new branch** for your changes:
