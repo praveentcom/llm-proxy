@@ -1,0 +1,21 @@
+{
+  "name": "llm-proxy-server",
+  "version": "1.0.0",
+  "main": "proxy.ts",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only proxy.ts",
+    "start": "node dist/proxy.js",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^24.8.1",
+    "@types/pg": "^8.15.5",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "pg": "^8.16.3"
+  }
+}
